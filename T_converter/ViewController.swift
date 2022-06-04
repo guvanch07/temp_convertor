@@ -9,11 +9,28 @@ import UIKit
 
 class ViewController: UIViewController {
 
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        // Do any additional setup after loading the view.
+   
+    @IBOutlet weak var cinliusLabel: UILabel!
+    
+    @IBOutlet weak var farradeyLabel: UILabel!
+    
+    @IBOutlet weak var slider: UISlider!{
+        didSet{
+            slider.maximumValue = 100
+            slider.minimumValue = 0
+            slider.value = 0
+        }
     }
-
-
+    
+    
+    @IBAction func sliderChabged(_ sender: UISlider) {
+        
+        let tempratureCelsius = Int(round(sender.value))
+        cinliusLabel.text = "\(tempratureCelsius)ºC"
+        let fahrenheiTemp = Int(round((sender.value * 9 / 5) + 32))
+        farradeyLabel.text = "\(fahrenheiTemp)ºF"
+    }
+    
+    
 }
 
