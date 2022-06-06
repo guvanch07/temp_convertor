@@ -9,26 +9,36 @@ import UIKit
 
 class ViewController: UIViewController {
 
-   
-    @IBOutlet weak var cinliusLabel: UILabel!
+
+    @IBOutlet weak var login: UITextField!
     
-    @IBOutlet weak var farradeyLabel: UILabel!
     
-    @IBOutlet weak var slider: UISlider!{
-        didSet{
-            slider.maximumValue = 100
-            slider.minimumValue = 0
-            slider.value = 0
-        }
+    @IBOutlet weak var password: UITextField!
+    
+    
+    @IBOutlet weak var resultText: UILabel!
+    
+    
+    @IBAction func confirmButton(_ sender: UIButton) {
+        performSegue(withIdentifier: "detailSegue", sender: nil)
     }
     
-    
-    @IBAction func sliderChabged(_ sender: UISlider) {
+    @IBAction func unwindSequeToMainScreen(segue: UIStoryboardSegue){
+        guard segue.identifier == "unwindSegue" else {return}
+        guard let svc = segue.source as? SecondViewController else {
+            return
+        }
+        self.resultText.text = svc.label.text
         
-        let tempratureCelsius = Int(round(sender.value))
-        cinliusLabel.text = "\(tempratureCelsius)ºC"
-        let fahrenheiTemp = Int(round((sender.value * 9 / 5) + 32))
-        farradeyLabel.text = "\(fahrenheiTemp)ºF"
+    }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        guard let dvc = segue.destination as? SecondViewController else {return}
+        dvc.login = login.text
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        self.view.endEditing(true)
     }
     
     
